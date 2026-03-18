@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEADER Perfume | Woh Khushbu Jo Kabhi Nahi Bhulayi Jaati</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --deep: #111111;
+  --red: #cc1a1a;
+  --red-glow: #ff2222;
+  --pink: #f472b6;
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --cream: #fdf6ec;
+  --white: #ffffff;
+  --gray: #888;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cursor { width:12px;height:12px;background:var(--red);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:difference;transition:transform .15s; }
+.cursor-ring { width:38px;height:38px;border:1px solid rgba(204,26,26,.5);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:all .3s ease; }
+
+/* PARTICLES */
+#particles { position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none; }
+
+/* NAV */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 40px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,rgba(0,0,0,.92),transparent);
+  backdrop-filter:blur(12px);
+}
+.nav-logo { font-family:'Playfair Display',serif;font-size:26px;font-weight:900;letter-spacing:6px;color:var(--white);text-decoration:none; }
+.nav-logo span { color:var(--red); }
+.nav-links { display:flex;gap:28px;list-style:none; }
+.nav-links a { color:rgba(255,255,255,.65);text-decoration:none;font-size:10px;letter-spacing:3px;text-transform:uppercase;transition:color .3s; }
+.nav-links a:hover { color:var(--red); }
+.nav-cart { background:var(--red);color:white;border:none;padding:10px 22px;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:none;transition:all .3s; }
+.nav-cart:hover { background:var(--red-glow);transform:scale(1.05); }
+.nav-toggle { display:none;background:none;border:none;color:white;font-size:22px;cursor:none; }
+
+/* HERO */
+.hero { position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:1; }
+.hero-bg {
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(204,26,26,.18) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 50%,rgba(244,114,182,.07) 0%,transparent 60%),
+             linear-gradient(135deg,#0a0a0a 0%,#1a0606 50%,#0a0a0a 100%);
+}
+.hero-content { position:relative;z-index:2;text-align:center;padding:20px; }
+.hero-eyebrow { font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--red);margin-bottom:20px;animation:fadeUp .8s ease both; }
+.hero-title { font-family:'Playfair Display',serif;font-size:clamp(58px,12vw,138px);font-weight:900;line-height:.9;letter-spacing:-2px;animation:fadeUp .8s .2s ease both; }
+.hero-title .stroke { display:block;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.25); }
+.hero-sub { font-family:'Cormorant Garamond',serif;font-size:clamp(15px,2.5vw,22px);font-weight:300;color:rgba(255,255,255,.55);margin:22px 0 16px;letter-spacing:2px;animation:fadeUp .8s .35s ease both; }
+.hero-tagline { font-family:'Cormorant Garamond',serif;font-size:clamp(13px,2vw,18px);font-weight:400;font-style:italic;color:rgba(255,255,255,.4);margin-bottom:40px;letter-spacing:1px;animation:fadeUp .8s .45s ease both; }
+.hero-cta { display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .6s ease both; }
+.btn-primary { background:linear-gradient(135deg,var(--red),#8b0000);color:white;border:none;padding:16px 40px;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:none;transition:all .3s;position:relative;overflow:hidden; }
+.btn-primary:hover { transform:translateY(-2px);box-shadow:0 20px 40px rgba(204,26,26,.4); }
+.btn-outline { background:transparent;color:white;border:1px solid rgba(255,255,255,.3);padding:16px 40px;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:none;transition:all .3s; }
+.btn-outline:hover { border-color:white;background:rgba(255,255,255,.05); }
+.scroll-hint { position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite;z-index:2; }
+.scroll-hint span { font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase; }
+.scroll-line { width:1px;height:55px;background:linear-gradient(to bottom,var(--red),transparent); }
+
+/* MARQUEE */
+.marquee-wrap { overflow:hidden;background:var(--red);padding:13px 0; }
+.marquee-track { display:flex;animation:marquee 22s linear infinite;white-space:nowrap; }
+.marquee-text { font-size:11px;letter-spacing:4px;text-transform:uppercase;padding:0 40px;color:white;font-weight:600; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* PRODUCTS */
+.products { padding:120px 40px;background:var(--deep);position:relative;z-index:1; }
+.products-header { text-align:center;margin-bottom:80px; }
+.section-label { font-size:10px;letter-spacing:6px;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:block; }
+.section-divider { width:60px;height:1px;background:var(--red);margin:20px auto; }
+.products-title { font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,68px);font-weight:700;letter-spacing:-1px; }
+.products-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:40px;max-width:1200px;margin:0 auto; }
+
+/* PRODUCT CARD */
+.product-card { border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);overflow:hidden;transition:all .4s ease;position:relative; }
+.product-card:hover { border-color:rgba(255,255,255,.18);transform:translateY(-8px);box-shadow:0 40px 80px rgba(0,0,0,.7); }
+.product-badge { position:absolute;top:18px;right:18px;background:var(--red);color:white;font-size:9px;letter-spacing:2px;padding:5px 12px;text-transform:uppercase;z-index:10; }
+.pink-card .product-badge { background:var(--gold); }
+
+/* SLIDER */
+.slider-wrap { position:relative;height:400px;overflow:hidden; }
+.slider-track { display:flex;height:100%;transition:transform .5s cubic-bezier(.77,0,.18,1); }
+.slider-track img { width:100%;height:100%;object-fit:cover;flex-shrink:0;transition:transform .6s; }
+.product-card:hover .slider-track img { transform:scale(1.04); }
+.slider-arrow { position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);color:white;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:none;z-index:5;transition:all .2s;font-size:18px; }
+.slider-arrow:hover { background:var(--red); }
+.s-prev { left:10px; }
+.s-next { right:10px; }
+.slider-dots { position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:5; }
+.dot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);cursor:none;transition:all .3s; }
+.dot.active { background:white;width:18px;border-radius:3px; }
+
+/* PRODUCT INFO */
+.product-info { padding:28px;background:rgba(0,0,0,.85);backdrop-filter:blur(10px); }
+.product-name { font-family:'Playfair Display',serif;font-size:30px;font-weight:900;letter-spacing:4px;margin-bottom:4px; }
+.black-card .product-name { color:white; }
+.pink-card .product-name { color:var(--gold-light); }
+.product-variant { font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:14px; }
+.pink-card .product-variant { color:var(--gold); }
+.product-desc { font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.8;color:rgba(255,255,255,.6);margin-bottom:18px; }
+.product-notes { display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px; }
+.note-tag { background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7);font-size:10px;letter-spacing:1px;padding:5px 11px;text-transform:uppercase; }
+.product-specs { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06); }
+.spec-item { text-align:center; }
+.spec-label { font-size:9px;letter-spacing:2px;color:var(--gray);text-transform:uppercase;display:block; }
+.spec-val { font-size:13px;color:var(--red);font-weight:600;margin-top:4px;display:block; }
+.pink-card .spec-val { color:var(--gold); }
+.price-row { display:flex;align-items:center;justify-content:space-between;margin-bottom:18px; }
+.product-price { font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--red); }
+.pink-card .product-price { color:var(--gold); }
+.product-price-old { font-size:15px;text-decoration:line-through;color:var(--gray);margin-left:8px; }
+.free-del { font-size:10px;letter-spacing:2px;color:#4ade80;text-transform:uppercase; }
+.add-btn { width:100%;padding:16px;background:var(--red);color:white;border:none;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:none;transition:all .3s;position:relative;overflow:hidden; }
+.pink-card .add-btn { background:var(--gold); }
+.add-btn::before { content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.2);border-radius:50%;transform:translate(-50%,-50%);transition:width .4s,height .4s; }
+.add-btn:hover::before { width:300px;height:300px; }
+.add-btn:hover { transform:scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,.5); }
+
+/* FEATURES */
+.features { padding:100px 40px;background:linear-gradient(135deg,#0a0a0a,#110606);position:relative;z-index:1; }
+.features-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;max-width:1000px;margin:56px auto 0; }
+.feat-item { text-align:center;padding:28px 18px;border:1px solid rgba(255,255,255,.06);transition:all .3s; }
+.feat-item:hover { border-color:var(--red);background:rgba(204,26,26,.06);transform:translateY(-5px); }
+.feat-icon { font-size:34px;margin-bottom:14px; }
+.feat-title { font-family:'Playfair Display',serif;font-size:17px;margin-bottom:8px; }
+.feat-desc { font-size:12px;color:var(--gray);line-height:1.7; }
+
+/* REVIEWS */
+.reviews { padding:100px 40px;background:var(--deep);position:relative;z-index:1; }
+.reviews-title { font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,52px);text-align:center;margin-bottom:14px; }
+.reviews-subtitle { text-align:center;font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.45);font-style:italic;margin-bottom:50px; }
+.review-tabs { display:flex;justify-content:center;gap:14px;margin-bottom:40px;flex-wrap:wrap; }
+.rtab { padding:10px 22px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.5);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:none;transition:all .3s; }
+.rtab.active { background:var(--red);border-color:var(--red);color:white; }
+.rtab:hover:not(.active) { border-color:rgba(255,255,255,.4);color:white; }
+.reviews-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1200px;margin:0 auto; }
+.review-card { padding:26px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);transition:all .3s; }
+.review-card:hover { border-color:rgba(255,255,255,.12);transform:translateY(-4px); }
+.r-tag { display:inline-block;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin-bottom:10px; }
+.black-review .r-tag { background:rgba(204,26,26,.15);color:var(--red); }
+.pink-review .r-tag { background:rgba(201,168,76,.15);color:var(--gold); }
+.r-stars { color:#fbbf24;font-size:13px;margin-bottom:10px; }
+.r-text { font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.75;color:rgba(255,255,255,.75);margin-bottom:14px;font-style:italic; }
+.r-author { display:flex;align-items:center;gap:10px; }
+.r-avatar { width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'Playfair Display',serif; }
+.black-review .r-avatar { background:rgba(204,26,26,.2);color:var(--red); }
+.pink-review .r-avatar { background:rgba(201,168,76,.2);color:var(--gold); }
+.r-name { font-size:13px;font-weight:600; }
+.r-city { font-size:10px;color:var(--gray);letter-spacing:1px; }
+
+/* CART SIDEBAR */
+.overlay { position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px); }
+.overlay.open { opacity:1;pointer-events:all; }
+.cart-sidebar { position:fixed;top:0;right:-100%;width:min(480px,100%);height:100vh;background:#111;border-left:1px solid rgba(255,255,255,.1);z-index:600;transition:right .4s cubic-bezier(.77,0,.18,1);display:flex;flex-direction:column;overflow-y:auto; }
+.cart-sidebar.open { right:0; }
+.cart-head { padding:28px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#111;z-index:1; }
+.cart-head h2 { font-family:'Playfair Display',serif;font-size:22px;letter-spacing:3px; }
+.cart-close { background:none;border:1px solid rgba(255,255,255,.2);color:white;width:34px;height:34px;font-size:18px;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .3s; }
+.cart-close:hover { background:var(--red);border-color:var(--red); }
+.cart-body { flex:1;padding:18px 28px; }
+.cart-empty { text-align:center;padding:56px 20px;color:var(--gray); }
+.cart-empty p { font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:6px; }
+.cart-empty small { font-size:12px; }
+.cart-item { display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.06);animation:fadeUp .3s ease both; }
+.cart-item img { width:78px;height:78px;object-fit:cover;border:1px solid rgba(255,255,255,.1);flex-shrink:0; }
+.ci-info { flex:1; }
+.ci-name { font-family:'Playfair Display',serif;font-size:15px;margin-bottom:3px; }
+.ci-var { font-size:10px;letter-spacing:2px;color:var(--gray);text-transform:uppercase; }
+.ci-price { font-size:17px;font-weight:600;color:var(--red);margin-top:6px; }
+.ci-remove { background:none;border:none;color:var(--gray);font-size:18px;cursor:none;transition:color .2s;padding:4px; }
+.ci-remove:hover { color:var(--red); }
+.cart-foot { padding:22px 28px;border-top:1px solid rgba(255,255,255,.08);background:#0a0a0a;position:sticky;bottom:0; }
+.cart-total-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:6px; }
+.ct-label { font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gray); }
+.ct-val { font-family:'Playfair Display',serif;font-size:26px;color:var(--red); }
+.free-note { font-size:10px;color:#4ade80;letter-spacing:1px;margin-bottom:18px; }
+.checkout-btn { width:100%;padding:16px;background:var(--red);color:white;border:none;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:none;transition:all .3s; }
+.checkout-btn:hover { background:var(--red-glow); }
+
+/* ORDER MODAL */
+.modal-bg { position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:700;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);padding:20px; }
+.modal-bg.open { display:flex; }
+.modal { background:#111;border:1px solid rgba(255,255,255,.1);width:100%;max-width:540px;max-height:90vh;overflow-y:auto;animation:slideUp .4s ease; }
+.modal-head { padding:28px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center; }
+.modal-title { font-family:'Playfair Display',serif;font-size:21px;letter-spacing:2px; }
+.modal-x { background:none;border:none;color:white;font-size:22px;cursor:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;transition:color .2s; }
+.modal-x:hover { color:var(--red); }
+.modal-body { padding:28px; }
+.order-summary { background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:16px;margin-bottom:20px; }
+.os-title { font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:12px; }
+.os-item { display:flex;justify-content:space-between;margin-bottom:7px;font-size:13px; }
+.os-total { display:flex;justify-content:space-between;padding-top:11px;border-top:1px solid rgba(255,255,255,.08);font-weight:700;font-size:17px; }
+.os-total-price { color:var(--red);font-family:'Playfair Display',serif;font-size:22px; }
+.form-row { margin-bottom:18px; }
+.form-label { display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:7px; }
+.form-input,.form-select,.form-ta { width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:white;padding:13px 15px;font-family:'Montserrat',sans-serif;font-size:14px;transition:border-color .3s;outline:none;appearance:none; }
+.form-input:focus,.form-select:focus,.form-ta:focus { border-color:var(--red); }
+.form-select option { background:#222; }
+.form-ta { resize:vertical;min-height:78px; }
+.pay-title { font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:14px;display:block; }
+.pay-opts { display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:0; }
+.pay-opt { border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);padding:13px 10px;text-align:center;cursor:none;transition:all .3s; }
+.pay-opt.sel { border-color:var(--red);background:rgba(204,26,26,.1); }
+.pay-icon { font-size:22px;display:block;margin-bottom:5px; }
+.pay-name { font-size:11px;letter-spacing:1px;font-weight:600;display:block; }
+.pay-sub { font-size:9px;color:var(--gray);letter-spacing:1px;display:block;margin-top:2px; }
+.pay-detail { display:none;margin-top:14px; }
+.pay-detail.active { display:block;animation:fadeUp .3s ease; }
+.pay-account { display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:10px; }
+.pa-emoji { font-size:26px; }
+.pa-info .pa-label { font-size:10px;color:var(--gray);letter-spacing:1px;display:block; }
+.pa-info .pa-num { font-size:17px;font-weight:700;letter-spacing:2px; }
+.pa-info .pa-who { font-size:12px;color:rgba(255,255,255,.55);display:block; }
+.copy-btn { margin-left:auto;background:rgba(255,255,255,.1);border:none;color:white;padding:7px 13px;font-size:11px;cursor:none;transition:all .2s;flex-shrink:0; }
+.copy-btn:hover { background:var(--red); }
+.pay-instr { font-size:12px;color:rgba(255,255,255,.6);line-height:1.7; }
+.pay-instr strong { color:var(--red); }
+.upload-area { margin-top:12px;border:2px dashed rgba(255,255,255,.14);padding:18px;text-align:center; }
+.upload-area label { cursor:none; }
+.upload-area input { display:none; }
+.up-icon { font-size:26px;margin-bottom:7px;display:block; }
+.up-text { font-size:11px;color:rgba(255,255,255,.5);letter-spacing:1px; }
+.up-text strong { color:var(--red); }
+.up-preview { max-width:100%;max-height:150px;margin-top:10px;border:1px solid rgba(255,255,255,.1); }
+.cod-box { background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);padding:15px;font-size:13px;color:rgba(255,255,255,.7);line-height:1.7; }
+.cod-box strong { color:#4ade80; }
+.place-btn { width:100%;padding:17px;background:linear-gradient(135deg,var(--red),#8b0000);color:white;border:none;font-family:'Montserrat',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;cursor:none;transition:all .3s;margin-top:22px; }
+.place-btn:hover { background:linear-gradient(135deg,var(--red-glow),#aa0000);transform:translateY(-2px);box-shadow:0 10px 30px rgba(204,26,26,.4); }
+
+/* SUCCESS */
+.success-bg { position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(12px); }
+.success-bg.open { display:flex; }
+.success-box { text-align:center;padding:56px 36px;border:1px solid rgba(255,255,255,.1);background:#111;max-width:430px;width:90%;animation:slideUp .4s ease; }
+.s-icon { font-size:58px;margin-bottom:18px;animation:pulse 1.2s ease infinite; }
+.s-title { font-family:'Playfair Display',serif;font-size:30px;margin-bottom:10px; }
+.s-msg { font-size:13px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:28px; }
+.wa-btn { display:inline-flex;align-items:center;gap:10px;background:#25d366;color:white;padding:15px 30px;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;transition:all .3s;cursor:none;border:none; }
+.wa-btn:hover { background:#128c7e;transform:scale(1.05); }
+.s-close { margin-top:16px;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);padding:10px 24px;cursor:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Montserrat',sans-serif;transition:all .2s; }
+.s-close:hover { border-color:rgba(255,255,255,.4);color:white; }
+
+/* FOOTER */
+footer { padding:56px 40px 28px;background:#050505;border-top:1px solid rgba(255,255,255,.06);text-align:center;position:relative;z-index:1; }
+.f-logo { font-family:'Playfair Display',serif;font-size:38px;font-weight:900;letter-spacing:8px;margin-bottom:14px; }
+.f-logo span { color:var(--red); }
+.f-tag { font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gray);margin-bottom:10px;font-style:italic; }
+.f-tag2 { font-family:'Cormorant Garamond',serif;font-size:14px;color:rgba(255,255,255,.3);margin-bottom:28px;letter-spacing:1px; }
+.f-links { display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-bottom:28px; }
+.f-links a { color:var(--gray);text-decoration:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:color .2s; }
+.f-links a:hover { color:var(--red); }
+.f-copy { font-size:11px;color:rgba(255,255,255,.18);letter-spacing:1px; }
+
+/* TOAST */
+.toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a1a1a;border:1px solid rgba(255,255,255,.1);border-left:3px solid var(--red);color:white;padding:14px 22px;font-size:13px;letter-spacing:1px;z-index:900;transition:transform .4s cubic-bezier(.77,0,.18,1);white-space:nowrap; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-10px)} }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+/* REVEAL */
+.reveal { opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1;transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav { padding:14px 18px; }
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+  .products { padding:70px 18px; }
+  .products-grid { grid-template-columns:1fr;gap:22px; }
+  .features { padding:60px 18px; }
+  .reviews { padding:60px 18px; }
+  footer { padding:36px 18px 18px; }
+  .pay-opts { grid-template-columns:1fr 1fr; }
+  .success-box { padding:36px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">LEAD<span>E</span>R</a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#features">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#" onclick="openCart()">Order Now</a></li>
+  </ul>
+  <button class="nav-cart" onclick="openCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+  <button class="nav-toggle" onclick="openCart()">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Pakistan's Most Powerful Fragrance ✦</div>
+    <h1 class="hero-title">
+      LEADER
+      <span class="stroke">PERFUME</span>
+    </h1>
+    <p class="hero-sub">Woh Khushbu Jo Kabhi Nahi Bhulayi Jaati</p>
+    <p class="hero-tagline">"Ek Spray — Poori Duniya Aapko Yaad Rakhe"</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now ↓</button>
+      <button class="btn-outline" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Discover More</button>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-text">✦ Free Home Delivery Poore Pakistan Mein</span>
+    <span class="marquee-text">✦ Woh Khushbu Jo Kabhi Nahi Bhulayi Jaati</span>
+    <span class="marquee-text">✦ 12-16 Ghante Long Lasting</span>
+    <span class="marquee-text">✦ Cash on Delivery Available</span>
+    <span class="marquee-text">✦ Sirf Rs. 2,500 — 44% Off</span>
+    <span class="marquee-text">✦ Free Home Delivery Poore Pakistan Mein</span>
+    <span class="marquee-text">✦ Woh Khushbu Jo Kabhi Nahi Bhulayi Jaati</span>
+    <span class="marquee-text">✦ 12-16 Ghante Long Lasting</span>
+    <span class="marquee-text">✦ Cash on Delivery Available</span>
+    <span class="marquee-text">✦ Sirf Rs. 2,500 — 44% Off</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header reveal">
+    <span class="section-label">Our Collection</span>
+    <h2 class="products-title">Signature <em>Fragrances</em></h2>
+    <div class="section-divider"></div>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gray);max-width:500px;margin:0 auto;line-height:1.7;">Do mukhtalif shakhsiyat. Ek maqbool khaushbu. Apni pehchaan chunein.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- BLACK -->
+    <div class="product-card black-card reveal">
+      <div class="product-badge">Bestseller ★</div>
+      <div class="slider-wrap">
+        <div class="slider-track" id="stB">
+          <img src="images/black-1.jpg" alt="Leader Black Perfume - Jungle Background">
+          <img src="images/black-2.png" alt="Leader Black Perfume - Floating Crystals">
+          <img src="images/black-3.png" alt="Leader Black Perfume - Green Background">
+        </div>
+        <button class="slider-arrow s-prev" onclick="slide('B',-1)">‹</button>
+        <button class="slider-arrow s-next" onclick="slide('B',1)">›</button>
+        <div class="slider-dots" id="sdB">
+          <div class="dot active" onclick="goSlide('B',0)"></div>
+          <div class="dot" onclick="goSlide('B',1)"></div>
+          <div class="dot" onclick="goSlide('B',2)"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">LEADER</div>
+        <div class="product-variant">◈ Black Edition — Pour Homme</div>
+        <p class="product-desc">Ek daring aur majestic fragrance jo har kamre mein aapki entry yaadgar bana de. Oud ki gehraai, citrus ki taazgi aur dark musk ki chaap — yeh sab milkar banata hai ek aisa perfume jise duniya kabhi nahi bhulaegi.</p>
+        <div class="product-notes">
+          <span class="note-tag">🍋 Citrus</span>
+          <span class="note-tag">🌶 Black Pepper</span>
+          <span class="note-tag">🪵 Oud</span>
+          <span class="note-tag">🌲 Cedarwood</span>
+          <span class="note-tag">🖤 Dark Musk</span>
+          <span class="note-tag">🍂 Amber</span>
+        </div>
+        <div class="product-specs">
+          <div class="spec-item"><span class="spec-label">Volume</span><span class="spec-val">50 ml</span></div>
+          <div class="spec-item"><span class="spec-label">Longevity</span><span class="spec-val">12–16 hrs</span></div>
+          <div class="spec-item"><span class="spec-label">Concentration</span><span class="spec-val">EDP</span></div>
+          <div class="spec-item"><span class="spec-label">Projection</span><span class="spec-val">Intense</span></div>
+        </div>
+        <div class="price-row">
+          <div><span class="product-price">Rs. 2,500</span><span class="product-price-old">Rs. 4,500</span></div>
+          <div class="free-del">✓ Free Delivery</div>
+        </div>
+        <button class="add-btn" onclick="addToCart('black')">Add to Cart ↗</button>
+      </div>
+    </div>
+
+    <!-- PINK -->
+    <div class="product-card pink-card reveal">
+      <div class="product-badge">New Launch ✦</div>
+      <div class="slider-wrap">
+        <div class="slider-track" id="stP">
+          <img src="images/pink-4.png" alt="Leader Pink Perfume - Peach Background">
+          <img src="images/pink-1.png" alt="Leader Pink Perfume - Floating Ribbons">
+          <img src="images/pink-2.png" alt="Leader Pink Perfume - Lady Holding">
+          <img src="images/pink-3.png" alt="Leader Pink Perfume - Pastel Background">
+        </div>
+        <button class="slider-arrow s-prev" onclick="slide('P',-1)">‹</button>
+        <button class="slider-arrow s-next" onclick="slide('P',1)">›</button>
+        <div class="slider-dots" id="sdP">
+          <div class="dot active" onclick="goSlide('P',0)"></div>
+          <div class="dot" onclick="goSlide('P',1)"></div>
+          <div class="dot" onclick="goSlide('P',2)"></div>
+          <div class="dot" onclick="goSlide('P',3)"></div>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">LEADER</div>
+        <div class="product-variant" style="color:var(--gold)">◈ Pink Edition — Pour Femme</div>
+        <p class="product-desc">Aik floral aur romantic masterpiece jo aapki personality mein ek alag hi roshni bhar de. Gulab ki naazuktat, jasmine ki taraawat aur white musk ki sensuality — yeh khushbu aapko woh pehchaan deti hai jo yaad rahti hai.</p>
+        <div class="product-notes">
+          <span class="note-tag">🌸 Pink Pepper</span>
+          <span class="note-tag">🍊 Citrus</span>
+          <span class="note-tag">🌹 Rose</span>
+          <span class="note-tag">🌺 Jasmine</span>
+          <span class="note-tag">🤍 White Musk</span>
+          <span class="note-tag">🌳 Sandalwood</span>
+        </div>
+        <div class="product-specs">
+          <div class="spec-item"><span class="spec-label">Volume</span><span class="spec-val">50 ml</span></div>
+          <div class="spec-item"><span class="spec-label">Longevity</span><span class="spec-val">10–14 hrs</span></div>
+          <div class="spec-item"><span class="spec-label">Concentration</span><span class="spec-val">EDP</span></div>
+          <div class="spec-item"><span class="spec-label">Projection</span><span class="spec-val">Moderate</span></div>
+        </div>
+        <div class="price-row">
+          <div><span class="product-price">Rs. 2,500</span><span class="product-price-old">Rs. 4,500</span></div>
+          <div class="free-del">✓ Free Delivery</div>
+        </div>
+        <button class="add-btn" onclick="addToCart('pink')">Add to Cart ↗</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div style="text-align:center" class="reveal">
+    <span class="section-label">Why LEADER</span>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,54px);font-weight:700;">Kyun Chunein <em>LEADER?</em></h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feat-item reveal">
+      <div class="feat-icon">⏱️</div>
+      <div class="feat-title">12–16 Ghante Tak</div>
+      <p class="feat-desc">Hamara EDP formula itna powerful hai ke ek spray subah lagate hain aur raat tak khushbu qaim rehti hai — bina re-apply kiye.</p>
+    </div>
+    <div class="feat-item reveal">
+      <div class="feat-icon">🌿</div>
+      <div class="feat-title">Premium Ingredients</div>
+      <p class="feat-desc">Asli oud, rose extracts aur exotic spices — duniya ke behtareen fragrance materials se banaya gaya hai LEADER.</p>
+    </div>
+    <div class="feat-item reveal">
+      <div class="feat-icon">🚚</div>
+      <div class="feat-title">Free Home Delivery</div>
+      <p class="feat-desc">Poore Pakistan mein bilkul free delivery — Cash on Delivery bhi available hai aapki suvidha ke liye.</p>
+    </div>
+    <div class="feat-item reveal">
+      <div class="feat-icon">💎</div>
+      <div class="feat-title">Luxury Packaging</div>
+      <p class="feat-desc">Matte finish bottle, gold ya red accents — gift karne ke liye ya khud rakhne ke liye — har taraf se premium.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <h2 class="reviews-title reveal">Customer <em>Reviews</em></h2>
+  <p class="reviews-subtitle reveal">"Hamare customers hi hamare brand ambassador hain"</p>
+  <div class="review-tabs reveal">
+    <button class="rtab active" onclick="filterR('all',this)">Sab Reviews</button>
+    <button class="rtab" onclick="filterR('black',this)">Black Edition</button>
+    <button class="rtab" onclick="filterR('pink',this)">Pink Edition</button>
+  </div>
+  <div class="reviews-grid" id="rGrid">
+
+    <div class="review-card black-review" data-t="black">
+      <span class="r-tag">Black Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Yaar sach mein zabardast hai! Office mein sab ne pucha kaunsa perfume lagaya hai. Full din chala — 14 ghante!"</p>
+      <div class="r-author"><div class="r-avatar">AK</div><div><div class="r-name">Ahmed Kamran</div><div class="r-city">Lahore, Punjab</div></div></div>
+    </div>
+
+    <div class="review-card pink-review" data-t="pink">
+      <span class="r-tag">Pink Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Pink edition bohot gorgeous smell hai! Subah lagaya shaam tak tha. Packaging bhi bahut achi — definitely reorder karungi!"</p>
+      <div class="r-author"><div class="r-avatar">SA</div><div><div class="r-name">Sara Anwar</div><div class="r-city">Karachi, Sindh</div></div></div>
+    </div>
+
+    <div class="review-card black-review" data-t="black">
+      <span class="r-tag">Black Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"2500 mein itna premium perfume? Yakin nahi tha lekin jab mila toh shock ho gaya. Oud ki khushbu kamaal ki hai!"</p>
+      <div class="r-author"><div class="r-avatar">UF</div><div><div class="r-name">Usman Farooq</div><div class="r-city">Islamabad</div></div></div>
+    </div>
+
+    <div class="review-card pink-review" data-t="pink">
+      <span class="r-tag">Pink Edition</span>
+      <div class="r-stars">★★★★☆</div>
+      <p class="r-text">"Meri beti ke liye order kiya tha shadi ke liye — woh bohot khush hui! Delivery bhi 2 din mein aa gayi. Shukriya!"</p>
+      <div class="r-author"><div class="r-avatar">NI</div><div><div class="r-name">Nadia Iqbal</div><div class="r-city">Faisalabad, Punjab</div></div></div>
+    </div>
+
+    <div class="review-card black-review" data-t="black">
+      <span class="r-tag">Black Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Ek dum boss wali feeling aati hai! 14 ghante raha literally. Koi doosra nahi lagaunga ab. COD bhi convenient tha!"</p>
+      <div class="r-author"><div class="r-avatar">BH</div><div><div class="r-name">Bilal Hassan</div><div class="r-city">Multan, Punjab</div></div></div>
+    </div>
+
+    <div class="review-card pink-review" data-t="pink">
+      <span class="r-tag">Pink Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Rose aur jasmine ka combination toh jaise jannat ki khushbu! Poori office ki girls puchti rehti hain. Amazing value!"</p>
+      <div class="r-author"><div class="r-avatar">ZM</div><div><div class="r-name">Zainab Malik</div><div class="r-city">Rawalpindi</div></div></div>
+    </div>
+
+    <div class="review-card black-review" data-t="black">
+      <span class="r-tag">Black Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Shadi mein pehna tha, puri raat compliments milte rahe. Guests soch rahe thay koi 10000 ka perfume hai!"</p>
+      <div class="r-author"><div class="r-avatar">TK</div><div><div class="r-name">Talha Khan</div><div class="r-city">Gujranwala, Punjab</div></div></div>
+    </div>
+
+    <div class="review-card pink-review" data-t="pink">
+      <span class="r-tag">Pink Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Gift kiya tha apni bestie ko birthday par — woh bohot khush hui! Packaging dekh ke lag raha tha koi expensive brand!"</p>
+      <div class="r-author"><div class="r-avatar">AM</div><div><div class="r-name">Areeba Mirza</div><div class="r-city">Sialkot, Punjab</div></div></div>
+    </div>
+
+    <div class="review-card black-review" data-t="black">
+      <span class="r-tag">Black Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Mujhe pehle allergies hoti thin imported se lekin yeh skin pe bilkul safe hai. Khushbu bhi professional. 10/10!"</p>
+      <div class="r-author"><div class="r-avatar">HR</div><div><div class="r-name">Hamza Raza</div><div class="r-city">Sargodha, Punjab</div></div></div>
+    </div>
+
+    <div class="review-card pink-review" data-t="pink">
+      <span class="r-tag">Pink Edition</span>
+      <div class="r-stars">★★★★★</div>
+      <p class="r-text">"Khushbu itni pyari hai ke lagta hai floral garden mein hoon. Raat tak bhi fresh rehti hai. Leader zindabad!"</p>
+      <div class="r-author"><div class="r-avatar">MK</div><div><div class="r-name">Madiha Khan</div><div class="r-city">Peshawar, KPK</div></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">LEAD<span>E</span>R</div>
+  <div class="f-tag">"Woh Khushbu Jo Kabhi Nahi Bhulayi Jaati"</div>
+  <div class="f-tag2">Ek Spray — Poori Duniya Aapko Yaad Rakhe</div>
+  <div class="f-links">
+    <a href="#products">Shop</a>
+    <a href="#features">About</a>
+    <a href="#reviews">Reviews</a>
+    <a href="https://wa.me/923128308472" target="_blank">WhatsApp</a>
+  </div>
+  <div class="f-copy">© 2025 Leader Perfume Pakistan 🇵🇰 | All Rights Reserved</div>
+</footer>
+
+<!-- CART OVERLAY + SIDEBAR -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartBar">
+  <div class="cart-head">
+    <h2>Your Cart</h2>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty"><p>Cart khali hai</p><small>Koi product add karein</small></div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-total-row">
+      <span class="ct-label">Total</span>
+      <span class="ct-val" id="cartTotal">Rs. 0</span>
+    </div>
+    <div class="free-note">✓ Free Home Delivery Included</div>
+    <button class="checkout-btn" onclick="openOrder()">Order Karein ↗</button>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-bg" id="orderModal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Order Complete Karein</span>
+      <button class="modal-x" onclick="closeOrder()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="order-summary">
+        <div class="os-title">Order Summary</div>
+        <div id="oSummary"></div>
+        <div class="os-total"><span>Total</span><span class="os-total-price" id="oTotal">Rs. 0</span></div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Aapka Naam *</label>
+        <input type="text" class="form-input" id="fName" placeholder="e.g. Ahmed Khan">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Phone Number *</label>
+        <input type="tel" class="form-input" id="fPhone" placeholder="+92 3XX XXXXXXX">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Ghar Ka Address *</label>
+        <textarea class="form-ta" id="fAddr" placeholder="Makaan No., Gali, Mohalla, Shehar"></textarea>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Shehar</label>
+        <input type="text" class="form-input" id="fCity" placeholder="e.g. Lahore">
+      </div>
+
+      <span class="pay-title">Payment Ka Tarika Chunein</span>
+      <div class="pay-opts">
+        <div class="pay-opt sel" id="pCod" onclick="selPay('cod')">
+          <span class="pay-icon">💵</span><span class="pay-name">Cash on Delivery</span><span class="pay-sub">Delivery pe dain</span>
+        </div>
+        <div class="pay-opt" id="pEp" onclick="selPay('ep')">
+          <span class="pay-icon">📱</span><span class="pay-name">EasyPaisa</span><span class="pay-sub">Mobile wallet</span>
+        </div>
+        <div class="pay-opt" id="pJc" onclick="selPay('jc')">
+          <span class="pay-icon">💳</span><span class="pay-name">JazzCash</span><span class="pay-sub">Mobile wallet</span>
+        </div>
+        <div class="pay-opt" id="pBk" onclick="selPay('bk')">
+          <span class="pay-icon">🏦</span><span class="pay-name">Bank Transfer</span><span class="pay-sub">Direct transfer</span>
+        </div>
+      </div>
+
+      <div class="pay-detail active" id="d_cod">
+        <div class="cod-box"><strong>✓ Cash on Delivery</strong><br><br>Aapka order WhatsApp par confirm hoga. Delivery ke waqt payment karein — 100% safe!<br><br>📦 Expected: <strong>2–4 Business Days</strong></div>
+      </div>
+
+      <div class="pay-detail" id="d_ep">
+        <div class="pay-account">
+          <span class="pa-emoji">📱</span>
+          <div class="pa-info">
+            <span class="pa-label">EasyPaisa Account</span>
+            <span class="pa-num">0312-8308472</span>
+            <span class="pa-who">Leader Perfume</span>
+          </div>
+          <button class="copy-btn" onclick="copyN('0312-8308472')">Copy</button>
+        </div>
+        <p class="pay-instr">Is number par <strong>Rs. 2,500</strong> bhejein. Screenshot lein aur WhatsApp karein: <strong>+92 312 8308472</strong></p>
+        <div class="upload-area"><label for="ss_ep"><span class="up-icon">📸</span><div class="up-text">Payment Screenshot <strong>Yahan Upload Karein</strong></div><img id="pr_ep" class="up-preview" style="display:none"></label><input type="file" id="ss_ep" accept="image/*" onchange="previewImg('ss_ep','pr_ep')"></div>
+      </div>
+
+      <div class="pay-detail" id="d_jc">
+        <div class="pay-account">
+          <span class="pa-emoji">💳</span>
+          <div class="pa-info">
+            <span class="pa-label">JazzCash Account</span>
+            <span class="pa-num">0312-8308472</span>
+            <span class="pa-who">Leader Perfume</span>
+          </div>
+          <button class="copy-btn" onclick="copyN('0312-8308472')">Copy</button>
+        </div>
+        <p class="pay-instr">Is number par <strong>Rs. 2,500</strong> bhejein. Screenshot lein aur WhatsApp karein: <strong>+92 312 8308472</strong></p>
+        <div class="upload-area"><label for="ss_jc"><span class="up-icon">📸</span><div class="up-text">Payment Screenshot <strong>Yahan Upload Karein</strong></div><img id="pr_jc" class="up-preview" style="display:none"></label><input type="file" id="ss_jc" accept="image/*" onchange="previewImg('ss_jc','pr_jc')"></div>
+      </div>
+
+      <div class="pay-detail" id="d_bk">
+        <div class="pay-account">
+          <span class="pa-emoji">🏦</span>
+          <div class="pa-info">
+            <span class="pa-label">Meezan Bank</span>
+            <span class="pa-num">0312-8308472</span>
+            <span class="pa-who">IBAN WhatsApp par milega</span>
+          </div>
+        </div>
+        <p class="pay-instr">Full details ke liye WhatsApp karein: <strong>+92 312 8308472</strong>. Transfer ke baad screenshot zaroor bhejein.</p>
+        <div class="upload-area"><label for="ss_bk"><span class="up-icon">📸</span><div class="up-text">Payment Screenshot <strong>Yahan Upload Karein</strong></div><img id="pr_bk" class="up-preview" style="display:none"></label><input type="file" id="ss_bk" accept="image/*" onchange="previewImg('ss_bk','pr_bk')"></div>
+      </div>
+
+      <button class="place-btn" onclick="placeOrder()">Order Place Karein — Rs. <span id="placeAmt">0</span> ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-bg" id="successBg">
+  <div class="success-box">
+    <div class="s-icon">🎉</div>
+    <h2 class="s-title">Order Ho Gaya!</h2>
+    <p class="s-msg" id="sMsg">Shukriya! Aapka order receive ho gaya. Hum jald confirm karenge.</p>
+    <button class="wa-btn" id="waBtn" onclick="openWA()">💬 WhatsApp Par Baat Karein</button>
+    <br>
+    <button class="s-close" onclick="closeSuccess()">Band Karein</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Added!</div>
+
+<script>
+// ---- CURSOR ----
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-6+'px';cur.style.top=my-6+'px';});
+(function anim(){rx+=(mx-rx-19)*.12;ry+=(my-ry-19)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+
+// ---- PARTICLES ----
+const cvs=document.getElementById('particles'),ctx=cvs.getContext('2d');
+let pts=[];
+function rsz(){cvs.width=window.innerWidth;cvs.height=window.innerHeight;}
+rsz();window.addEventListener('resize',rsz);
+for(let i=0;i<55;i++)pts.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.4+.3,dx:(Math.random()-.5)*.28,dy:(Math.random()-.5)*.28,a:Math.random()*.35+.1,c:Math.random()>.5?'#cc1a1a':'#c9a84c'});
+(function dp(){ctx.clearRect(0,0,cvs.width,cvs.height);pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();p.x+=p.dx;p.y+=p.dy;if(p.x<0)p.x=cvs.width;if(p.x>cvs.width)p.x=0;if(p.y<0)p.y=cvs.height;if(p.y>cvs.height)p.y=0;});ctx.globalAlpha=1;requestAnimationFrame(dp);})();
+
+// ---- SCROLL REVEAL ----
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// ---- SLIDERS ----
+const idxs={B:0,P:0};
+const totals={B:3,P:4};
+function slide(w,d){idxs[w]=(idxs[w]+d+totals[w])%totals[w];updateSlider(w);}
+function goSlide(w,i){idxs[w]=i;updateSlider(w);}
+function updateSlider(w){
+  document.getElementById('st'+w).style.transform=`translateX(-${idxs[w]*100}%)`;
+  document.getElementById('sd'+w).querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idxs[w]));
+}
+setInterval(()=>slide('B',1),4000);
+setInterval(()=>slide('P',1),5200);
+
+// ---- CART ----
+let cart=[];
+const PRODS={
+  black:{name:'LEADER Black Edition',price:2500,img:'images/black-1.jpg',var:'Pour Homme — 50ml'},
+  pink:{name:'LEADER Pink Edition',price:2500,img:'images/pink-4.png',var:'Pour Femme — 50ml'}
+};
+let waMsg='';
+
+function addToCart(t){
+  const ex=cart.find(i=>i.t===t);
+  if(ex)ex.qty++;else cart.push({t,qty:1,...PRODS[t]});
+  updateCartUI();showToast('Cart mein add ho gaya! 🛍️');openCart();
+}
+function removeItem(t){cart=cart.filter(i=>i.t!==t);updateCartUI();}
+function updateCartUI(){
+  const total=cart.reduce((a,i)=>a+i.price*i.qty,0);
+  const count=cart.reduce((a,i)=>a+i.qty,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cartTotal').textContent='Rs. '+total.toLocaleString();
+  document.getElementById('oTotal').textContent='Rs. '+total.toLocaleString();
+  document.getElementById('placeAmt').textContent=total.toLocaleString();
+  const cb=document.getElementById('cartBody');
+  if(!cart.length){cb.innerHTML='<div class="cart-empty"><p>Cart khali hai</p><small>Koi product add karein</small></div>';return;}
+  cb.innerHTML=cart.map(i=>`<div class="cart-item"><img src="${i.img}" alt="${i.name}"><div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-var">${i.var}</div><div style="font-size:11px;color:var(--gray);margin-top:3px">Qty: ${i.qty}</div><div class="ci-price">Rs. ${(i.price*i.qty).toLocaleString()}</div></div><button class="ci-remove" onclick="removeItem('${i.t}')">✕</button></div>`).join('');
+  const si=document.getElementById('oSummary');
+  si.innerHTML=cart.map(i=>`<div class="os-item"><span>${i.name} x${i.qty}</span><span>Rs. ${(i.price*i.qty).toLocaleString()}</span></div>`).join('')+'<div class="os-item"><span>Delivery</span><span style="color:#4ade80">FREE</span></div>';
+}
+function openCart(){document.getElementById('overlay').classList.add('open');document.getElementById('cartBar').classList.add('open');}
+function closeCart(){document.getElementById('overlay').classList.remove('open');document.getElementById('cartBar').classList.remove('open');}
+
+// ---- ORDER ----
+let selP='cod';
+function openOrder(){if(!cart.length){showToast('Pehle koi product add karein!');return;}closeCart();document.getElementById('orderModal').classList.add('open');}
+function closeOrder(){document.getElementById('orderModal').classList.remove('open');}
+function selPay(m){
+  selP=m;
+  ['Cod','Ep','Jc','Bk'].forEach(x=>document.getElementById('p'+x)?.classList.remove('sel'));
+  ['cod','ep','jc','bk'].forEach(x=>document.getElementById('d_'+x)?.classList.remove('active'));
+  const map={cod:'Cod',ep:'Ep',jc:'Jc',bk:'Bk'};
+  document.getElementById('p'+map[m])?.classList.add('sel');
+  document.getElementById('d_'+m)?.classList.add('active');
+}
+function placeOrder(){
+  const nm=document.getElementById('fName').value.trim();
+  const ph=document.getElementById('fPhone').value.trim();
+  const ad=document.getElementById('fAddr').value.trim();
+  if(!nm||!ph||!ad){showToast('Sab required fields bharein!');return;}
+  if(!cart.length){showToast('Cart khali hai!');return;}
+  const total=cart.reduce((a,i)=>a+i.price*i.qty,0);
+  const items=cart.map(i=>`${i.name} x${i.qty}`).join(', ');
+  const payNames={cod:'Cash on Delivery',ep:'EasyPaisa',jc:'JazzCash',bk:'Bank Transfer'};
+  waMsg=`🌟 *NEW ORDER — LEADER PERFUME* 🌟\n\n👤 *Naam:* ${nm}\n📞 *Phone:* ${ph}\n📍 *Address:* ${ad}\n\n🛒 *Products:* ${items}\n💰 *Total:* Rs. ${total.toLocaleString()}\n🚚 *Delivery:* FREE\n💳 *Payment:* ${payNames[selP]}\n\nShukriya Leader Perfume se order karne ka! 🙏`;
+  document.getElementById('sMsg').innerHTML=`Shukriya <strong>${nm}</strong>! Aapka order receive ho gaya.<br><br>📦 <strong>${items}</strong><br>💰 Total: <strong>Rs. ${total.toLocaleString()}</strong><br>💳 Payment: <strong>${payNames[selP]}</strong><br><br>WhatsApp par confirm karein:`;
+  closeOrder();document.getElementById('successBg').classList.add('open');
+  cart=[];updateCartUI();
+}
+function openWA(){window.open('https://wa.me/923128308472?text='+encodeURIComponent(waMsg),'_blank');}
+function closeSuccess(){document.getElementById('successBg').classList.remove('open');}
+
+// ---- UTILS ----
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function copyN(n){navigator.clipboard.writeText(n).then(()=>showToast('Copy ho gaya: '+n));}
+function previewImg(iid,pid){const f=document.getElementById(iid).files[0];if(f){const r=new FileReader();r.onload=e=>{const img=document.getElementById(pid);img.src=e.target.result;img.style.display='block';};r.readAsDataURL(f);}}
+function filterR(t,btn){document.querySelectorAll('.rtab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.review-card').forEach(c=>{c.style.display=(t==='all'||c.dataset.t===t)?'':'none';});}
+document.getElementById('orderModal').addEventListener('click',function(e){if(e.target===this)closeOrder();});
+</script>
+</body>
+</html>
